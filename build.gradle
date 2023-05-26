@@ -5,6 +5,8 @@ buildscript {
         activityComposeVersion = '1.7.1'
         material3Version = '1.1.0'
         coilVersion = '2.4.0'
+        retrofitVersion = '2.9.0'
+        okHttpVersion = '4.10.0'
     }
     dependencies {
         // other plugins...
