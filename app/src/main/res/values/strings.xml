@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MyCustomPlayer</string>
+    <string name="content_description_image_song">This is the song\'s cover image</string>
 </resources>
