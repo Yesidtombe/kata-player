@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dojo.globant.mycustomplayer.common.composables.MyItemSong
-import com.dojo.globant.mycustomplayer.core.navigation.Graph
 import com.dojo.globant.mycustomplayer.feature.home.ui.viewmodel.HomeViewModel
 import com.dojo.globant.mycustomplayer.ui.theme.BgMainScreen
 import com.dojo.globant.mycustomplayer.ui.theme.ShadowTitle
@@ -42,15 +41,19 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 items(artistItems.value) {
-                    ItemArtist(it.name, navController)
+                    ItemArtist(it.name, navController) {
+                        viewModel.getFavorites()
+                    }
                 }
             }
             Spacer(modifier = Modifier.height(4.dp))
             LazyColumn(
                verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                items(trackItems.value) {
-                    MyItemSong(it)
+                items(trackItems.value) { track ->
+                    MyItemSong(track) {
+                        viewModel.addFavorite(it)
+                    }
                 }
             }
         }
@@ -58,13 +61,13 @@ fun HomeScreen(
 }
 
 @Composable
-fun ItemArtist(artistName: String, navController: NavController) {
+fun ItemArtist(artistName: String, navController: NavController, onShowList: () -> Unit) {
     TextButton(
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = ShadowTitle
         ),
-        onClick = { navController.navigate(Graph.DETAILS) }
+        onClick = { onShowList() }
     ) {
         Text(
             text = artistName

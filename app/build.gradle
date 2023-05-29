@@ -68,6 +68,9 @@ dependencies {
     // Coil
     implementation "io.coil-kt:coil-compose:$coilVersion"
 
+    // Datastore preferences
+    implementation 'androidx.datastore:datastore-preferences:1.0.0'
+
     // Network
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"

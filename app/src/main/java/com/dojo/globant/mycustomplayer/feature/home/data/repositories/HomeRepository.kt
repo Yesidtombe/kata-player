@@ -3,6 +3,7 @@ package com.dojo.globant.mycustomplayer.feature.home.data.repositories
 import com.dojo.globant.mycustomplayer.R
 import com.dojo.globant.mycustomplayer.common.util.ApiResponse
 import com.dojo.globant.mycustomplayer.common.util.UiText
+import com.dojo.globant.mycustomplayer.core.datastore.UserManager
 import com.dojo.globant.mycustomplayer.feature.home.data.models.ArtistResponse
 import com.dojo.globant.mycustomplayer.feature.home.data.models.TrackResponse
 import com.dojo.globant.mycustomplayer.feature.home.data.network.ArtistClient
@@ -13,7 +14,8 @@ import javax.inject.Inject
 @ViewModelScoped
 class HomeRepository @Inject constructor(
     private val artistClient: ArtistClient,
-    private val trackClient: TrackClient
+    private val trackClient: TrackClient,
+    private val userManager: UserManager
 ) {
     suspend fun getArtists(): ApiResponse<ArtistResponse> {
         val response = artistClient.getArtistsAllGenres()
@@ -38,4 +40,15 @@ class HomeRepository @Inject constructor(
                 ApiResponse.Error(errorMessage = UiText.StringResource(id = R.string.unexpected_error))
         }
     }
+
+    suspend fun saveFavoriteSong(idTrack: String) {
+        val listFavorites = userManager.getFavoriteSongs().toMutableSet()
+        listFavorites.add(idTrack)
+        userManager.saveFavoriteSongs(listFavorites.toSet())
+    }
+
+    suspend fun getFavoritesSong() : List<String> {
+        return userManager.getFavoriteSongs().toList()
+    }
+
 }

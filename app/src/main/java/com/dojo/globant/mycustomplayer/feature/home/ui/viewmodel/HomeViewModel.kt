@@ -1,5 +1,6 @@
 package com.dojo.globant.mycustomplayer.feature.home.ui.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +9,9 @@ import com.dojo.globant.mycustomplayer.feature.home.domain.models.Artist
 import com.dojo.globant.mycustomplayer.feature.home.domain.models.Track
 import com.dojo.globant.mycustomplayer.feature.home.domain.models.toDomain
 import com.dojo.globant.mycustomplayer.feature.home.domain.usecases.GetAllArtistUseCase
+import com.dojo.globant.mycustomplayer.feature.home.domain.usecases.GetFavoriteSongsUseCase
 import com.dojo.globant.mycustomplayer.feature.home.domain.usecases.GetTopTracksByArtistUseCase
+import com.dojo.globant.mycustomplayer.feature.home.domain.usecases.SaveFavoriteSongUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,7 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val getAllArtistUseCase: GetAllArtistUseCase,
-    private val getTopTracksByArtistUseCase: GetTopTracksByArtistUseCase
+    private val getTopTracksByArtistUseCase: GetTopTracksByArtistUseCase,
+    private val saveFavoriteSongUseCase: SaveFavoriteSongUseCase,
+    private val getFavoriteSongsUseCase: GetFavoriteSongsUseCase
 ) : ViewModel() {
 
     private val _artistState = mutableStateOf<List<Artist>>(listOf())
@@ -46,6 +51,20 @@ class HomeViewModel @Inject constructor(
 
                     }
                 }
+            }
+        }
+    }
+
+    fun addFavorite(idTrack: String) {
+        viewModelScope.launch {
+            saveFavoriteSongUseCase.saveFavoriteSong(idTrack)
+        }
+    }
+
+    fun getFavorites() {
+        viewModelScope.launch {
+            getFavoriteSongsUseCase.getFavoritesSong().collect {
+                Log.i("Favorites", it.toString())
             }
         }
     }

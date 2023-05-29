@@ -1,6 +1,7 @@
 package com.dojo.globant.mycustomplayer.common.composables
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -31,7 +32,10 @@ import com.dojo.globant.mycustomplayer.ui.theme.MyPlayerTypography
 import com.dojo.globant.mycustomplayer.ui.theme.TitleWhite
 
 @Composable
-fun MyItemSong(track: Track) {
+fun MyItemSong(
+    track: Track,
+    onClickFavorite: (String) -> Unit
+) {
     Row (horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
@@ -68,7 +72,12 @@ fun MyItemSong(track: Track) {
                 )
             }
         }
-        Icon(imageVector = Icons.Default.FavoriteBorder, contentDescription = null, tint = TitleWhite)
+        Icon(
+            modifier = Modifier.clickable { onClickFavorite(track.id.toString()) },
+            imageVector = Icons.Default.FavoriteBorder,
+            contentDescription = null,
+            tint = TitleWhite
+        )
     }
 }
 
@@ -96,7 +105,7 @@ fun MyPreview() {
             ),
             preview = "preview"
         )
-        MyItemSong(track)
-        MyItemSong(track)
+        MyItemSong(track) { }
+        MyItemSong(track) { }
     }
 }
