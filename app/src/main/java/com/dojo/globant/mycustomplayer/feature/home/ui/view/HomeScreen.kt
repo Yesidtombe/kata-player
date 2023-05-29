@@ -6,12 +6,11 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dojo.globant.mycustomplayer.common.composables.MyItemSong
@@ -21,12 +20,16 @@ import com.dojo.globant.mycustomplayer.ui.theme.ShadowTitle
 
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    paddingValues: PaddingValues
 ) {
     val artistItems = viewModel.artistState
     val trackItems = viewModel.trackState
 
-    Scaffold(containerColor = BgMainScreen) {
+    Surface(
+        modifier = Modifier.fillMaxSize().padding(paddingValues),
+        color = BgMainScreen
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -64,10 +67,4 @@ fun ItemArtist(artistName: String) {
             text = artistName
         )
     }
-}
-
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun MyHomeScreenPreview() {
-    HomeScreen()
 }

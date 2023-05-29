@@ -3,6 +3,7 @@ buildscript {
         composeUiVersion = '1.4.3'
         hiltVersion = '2.43.2'
         hiltComposeVersion = '1.0.0'
+        navigationVersion = '2.5.3'
         activityComposeVersion = '1.7.1'
         material3Version = '1.1.0'
         coilVersion = '2.4.0'
