@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
@@ -34,7 +35,7 @@ import com.dojo.globant.mycustomplayer.ui.theme.TitleWhite
 @Composable
 fun MyItemSong(
     track: Track,
-    onClickFavorite: (String) -> Unit
+    onClickFavorite: () -> Unit
 ) {
     Row (horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
         AsyncImage(
@@ -73,8 +74,8 @@ fun MyItemSong(
             }
         }
         Icon(
-            modifier = Modifier.clickable { onClickFavorite(track.id.toString()) },
-            imageVector = Icons.Default.FavoriteBorder,
+            modifier = Modifier.clickable { onClickFavorite() },
+            imageVector = if(track.favorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
             contentDescription = null,
             tint = TitleWhite
         )

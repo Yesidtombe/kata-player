@@ -6,7 +6,8 @@ data class Artist(
     val id: Int,
     val name: String,
     val picture: String?,
-    val trackList: String
+    val trackList: String,
+    var selected: Boolean = false
 )
 
 fun Artist.toDomain() = Artist(

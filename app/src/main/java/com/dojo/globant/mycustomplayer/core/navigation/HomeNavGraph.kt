@@ -31,7 +31,9 @@ fun HomeNavGraph(
             )
         }
         composable(route = Destinations.FavoritesScreen.route) {
-            FavoriteScreen()
+            FavoriteScreen(
+                paddingValues = paddingValues
+            )
         }
         composable(route = Destinations.ProfileScreen.route) {
             Text(text = stringResource(id = R.string.profile_text_label))

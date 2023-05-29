@@ -47,6 +47,12 @@ class HomeRepository @Inject constructor(
         userManager.saveFavoriteSongs(listFavorites.toSet())
     }
 
+    suspend fun deleteFavoriteSong(idTrack: String) {
+        val listFavorites = userManager.getFavoriteSongs().toMutableSet()
+        listFavorites.remove(idTrack)
+        userManager.saveFavoriteSongs(listFavorites.toSet())
+    }
+
     suspend fun getFavoritesSong() : List<String> {
         return userManager.getFavoriteSongs().toList()
     }

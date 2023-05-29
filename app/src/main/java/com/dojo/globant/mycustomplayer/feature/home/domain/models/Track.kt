@@ -8,7 +8,8 @@ data class Track(
     val duration: Int,
     val artist: Artist,
     val album: Album,
-    val preview: String
+    val preview: String,
+    var favorite: Boolean = false
 )
 
 fun Track.toDomain() = Track(
