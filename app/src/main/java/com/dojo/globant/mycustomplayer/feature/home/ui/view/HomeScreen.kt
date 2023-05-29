@@ -13,7 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.dojo.globant.mycustomplayer.common.composables.MyItemSong
+import com.dojo.globant.mycustomplayer.core.navigation.Graph
 import com.dojo.globant.mycustomplayer.feature.home.ui.viewmodel.HomeViewModel
 import com.dojo.globant.mycustomplayer.ui.theme.BgMainScreen
 import com.dojo.globant.mycustomplayer.ui.theme.ShadowTitle
@@ -21,6 +23,7 @@ import com.dojo.globant.mycustomplayer.ui.theme.ShadowTitle
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
+    navController: NavController,
     paddingValues: PaddingValues
 ) {
     val artistItems = viewModel.artistState
@@ -39,7 +42,7 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 items(artistItems.value) {
-                    ItemArtist(it.name)
+                    ItemArtist(it.name, navController)
                 }
             }
             Spacer(modifier = Modifier.height(4.dp))
@@ -55,13 +58,13 @@ fun HomeScreen(
 }
 
 @Composable
-fun ItemArtist(artistName: String) {
+fun ItemArtist(artistName: String, navController: NavController) {
     TextButton(
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = ShadowTitle
         ),
-        onClick = { /*TODO*/ }
+        onClick = { navController.navigate(Graph.DETAILS) }
     ) {
         Text(
             text = artistName

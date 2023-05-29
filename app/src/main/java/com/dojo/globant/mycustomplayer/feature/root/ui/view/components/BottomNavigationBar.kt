@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dojo.globant.mycustomplayer.core.navigation.Destinations
 
@@ -36,7 +37,14 @@ fun BottomNavigationBar(
                         color = Color.White
                     ) },
                     selected = currentRoute == screen.route,
-                    onClick = { /* TODO */},
+                    onClick = {
+                        navController.navigate(screen.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                        }
+                    },
                     alwaysShowLabel = false
                 )
             }
