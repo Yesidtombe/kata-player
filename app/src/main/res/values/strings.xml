@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">MyCustomPlayer</string>
     <string name="content_description_image_song">This is the song\'s cover image</string>
+    <string name="not_found_error">Resource not found</string>
+    <string name="unexpected_error">Unexpected error</string>
 </resources>

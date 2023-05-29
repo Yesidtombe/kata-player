@@ -25,7 +25,7 @@ import com.dojo.globant.mycustomplayer.R
 import com.dojo.globant.mycustomplayer.ui.theme.ArtistGray
 import com.dojo.globant.mycustomplayer.ui.theme.MyPlayerTypography
 import com.dojo.globant.mycustomplayer.ui.theme.TitleWhite
-import com.dojo.globant.mycustomplayer.ui.theme.bgMainScreen
+import com.dojo.globant.mycustomplayer.ui.theme.BgMainScreen
 
 @Composable
 fun MyItemSong() {
@@ -40,7 +40,7 @@ fun MyItemSong() {
             contentDescription = stringResource(R.string.content_description_image_song),
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .size(100.dp)
+                .size(80.dp)
                 .clip(RoundedCornerShape(8.dp))
                 .weight(1f)
         )
@@ -74,7 +74,7 @@ fun MyItemSong() {
 fun MyPreview() {
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(bgMainScreen)) {
+        .background(BgMainScreen)) {
         MyItemSong()
         MyItemSong()
     }
