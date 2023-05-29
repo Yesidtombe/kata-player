@@ -22,17 +22,20 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.dojo.globant.mycustomplayer.R
+import com.dojo.globant.mycustomplayer.feature.home.domain.models.Album
+import com.dojo.globant.mycustomplayer.feature.home.domain.models.Artist
+import com.dojo.globant.mycustomplayer.feature.home.domain.models.Track
 import com.dojo.globant.mycustomplayer.ui.theme.ArtistGray
+import com.dojo.globant.mycustomplayer.ui.theme.BgMainScreen
 import com.dojo.globant.mycustomplayer.ui.theme.MyPlayerTypography
 import com.dojo.globant.mycustomplayer.ui.theme.TitleWhite
-import com.dojo.globant.mycustomplayer.ui.theme.BgMainScreen
 
 @Composable
-fun MyItemSong() {
+fun MyItemSong(track: Track) {
     Row (horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data("https://i.pinimg.com/originals/8b/ba/73/8bba73567972ab788c36eae11af4fb51.jpg")
+                .data(track.album.cover)
                 .crossfade(true)
                 .build(),
             placeholder = painterResource(R.drawable.icon_image_loading),
@@ -48,7 +51,7 @@ fun MyItemSong() {
             .weight(4f)
             .padding(8.dp)) {
             Text(
-                text = "I'm Good (Blue)",
+                text = track.title,
                 style = MyPlayerTypography.body1
             )
             Row (verticalAlignment = Alignment.CenterVertically) {
@@ -59,7 +62,7 @@ fun MyItemSong() {
                     tint = ArtistGray
                 )
                 Text(
-                    text = "David Guetta & Bebe Rexha",
+                    text = track.artist.name,
                     color = ArtistGray,
                     fontSize = 16.sp
                 )
@@ -75,7 +78,25 @@ fun MyPreview() {
     Column(modifier = Modifier
         .fillMaxSize()
         .background(BgMainScreen)) {
-        MyItemSong()
-        MyItemSong()
+        val track = Track(
+            id = 1,
+            title = "Beautiful lie",
+            duration = 23,
+            artist = Artist(
+                id = 2,
+                name = "30 Seconds to Mars",
+                "http://thepicture.jpg",
+                trackList = "http://tracklist"
+            ),
+            album = Album(
+                id = 3,
+                title = "An album for example",
+                cover = "https://i.pinimg.com/originals/8b/ba/73/8bba73567972ab788c36eae11af4fb51.jpg",
+                trackList = "http://tracklist"
+            ),
+            preview = "preview"
+        )
+        MyItemSong(track)
+        MyItemSong(track)
     }
 }

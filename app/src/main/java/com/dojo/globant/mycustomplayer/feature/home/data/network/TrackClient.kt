@@ -7,9 +7,9 @@ import retrofit2.http.Path
 
 interface TrackClient {
 
-    @GET("artist/{artistId}top?limit=50")
+    @GET("artist/{artistId}/top?limit=50")
     suspend fun getTopTracksByArtis(
         @Path("artistId") artistId: Int
-    ) : Response<List<TrackResponse>>
+    ) : Response<TrackResponse>
 
 }

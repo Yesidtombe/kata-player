@@ -7,6 +7,6 @@ import retrofit2.http.GET
 interface ArtistClient {
 
     @GET("genre/0/artists")
-    suspend fun getArtistsAllGenres() : Response<List<ArtistResponse>>
+    suspend fun getArtistsAllGenres() : Response<ArtistResponse>
 
 }

@@ -1,8 +1,10 @@
 package com.dojo.globant.mycustomplayer.feature.home.di
 
 import com.dojo.globant.mycustomplayer.feature.home.data.network.ArtistClient
+import com.dojo.globant.mycustomplayer.feature.home.data.network.TrackClient
 import com.dojo.globant.mycustomplayer.feature.home.data.repositories.HomeRepository
-import com.dojo.globant.mycustomplayer.feature.home.domain.usecases.GetAllTracksUseCase
+import com.dojo.globant.mycustomplayer.feature.home.domain.usecases.GetAllArtistUseCase
+import com.dojo.globant.mycustomplayer.feature.home.domain.usecases.GetTopTracksByArtistUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,13 +17,22 @@ import retrofit2.Retrofit
 object HomeModule {
 
     @Provides
+    fun provideTrackClient(retrofit: Retrofit): TrackClient =
+        retrofit.create(TrackClient::class.java)
+
+    @Provides
+    fun provideGetTopTracksByArtistUseCase(repository: HomeRepository): GetTopTracksByArtistUseCase =
+        GetTopTracksByArtistUseCase(repository, Dispatchers.IO)
+
+    @Provides
     fun provideArtistClient(retrofit: Retrofit): ArtistClient =
         retrofit.create(ArtistClient::class.java)
 
     @Provides
-    fun provideGetAllTracksUseCase(repository: HomeRepository): GetAllTracksUseCase =
-        GetAllTracksUseCase(repository, Dispatchers.IO)
+    fun provideGetAllArtistsUseCase(repository: HomeRepository): GetAllArtistUseCase =
+        GetAllArtistUseCase(repository, Dispatchers.IO)
 
-    fun provideHomeRepository(artistClient: ArtistClient): HomeRepository =
-        HomeRepository(artistClient)
+    @Provides
+    fun provideHomeRepository(artistClient: ArtistClient, trackClient: TrackClient): HomeRepository =
+        HomeRepository(artistClient, trackClient)
 }

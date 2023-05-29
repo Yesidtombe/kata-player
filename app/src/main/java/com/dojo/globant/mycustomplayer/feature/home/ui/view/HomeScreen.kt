@@ -13,22 +13,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.dojo.globant.mycustomplayer.common.composables.MyItemSong
+import com.dojo.globant.mycustomplayer.feature.home.ui.viewmodel.HomeViewModel
 import com.dojo.globant.mycustomplayer.ui.theme.BgMainScreen
+import com.dojo.globant.mycustomplayer.ui.theme.ShadowTitle
 
 @Composable
-fun HomeScreen() {
-
-    val listItems = listOf(
-        "Don Omar",
-        "Romeo Santos",
-        "Eminem",
-        "Shakira",
-        "Karol G",
-        "Juanes",
-        "Carlos Vives",
-        "Alkolyrics"
-    )
+fun HomeScreen(
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+    val artistItems = viewModel.artistState
+    val trackItems = viewModel.trackState
 
     Scaffold(containerColor = BgMainScreen) {
         Column(
@@ -39,16 +35,16 @@ fun HomeScreen() {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                items(listItems) {
-                    ItemArtist(it)
+                items(artistItems.value) {
+                    ItemArtist(it.name)
                 }
             }
             Spacer(modifier = Modifier.height(4.dp))
             LazyColumn(
                verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                items(10) {
-                    MyItemSong()
+                items(trackItems.value) {
+                    MyItemSong(it)
                 }
             }
         }
@@ -59,7 +55,9 @@ fun HomeScreen() {
 fun ItemArtist(artistName: String) {
     TextButton(
         shape = RoundedCornerShape(8.dp),
-        colors = ButtonDefaults.buttonColors(),
+        colors = ButtonDefaults.buttonColors(
+            containerColor = ShadowTitle
+        ),
         onClick = { /*TODO*/ }
     ) {
         Text(

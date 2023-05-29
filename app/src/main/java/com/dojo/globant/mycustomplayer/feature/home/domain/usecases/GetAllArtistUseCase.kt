@@ -7,12 +7,13 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import javax.inject.Inject
 
-class GetAllTracksUseCase(
+class GetAllArtistUseCase @Inject constructor (
     private val repository: HomeRepository,
     private val dispatcher: CoroutineDispatcher
 ) {
-    suspend fun getArtists(): Flow<ApiResponse<List<ArtistResponse>>> =
+    suspend fun getArtists(): Flow<ApiResponse<ArtistResponse>> =
         flow {
             emit(repository.getArtists())
         }.flowOn(dispatcher)
