@@ -35,9 +35,14 @@ import com.dojo.globant.mycustomplayer.ui.theme.TitleWhite
 @Composable
 fun MyItemSong(
     track: Track,
+    onClickTrack: (Long) -> Unit,
     onClickFavorite: () -> Unit
 ) {
-    Row (horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier.clickable { onClickTrack(track.id) },
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(track.album.cover)
@@ -106,7 +111,7 @@ fun MyPreview() {
             ),
             preview = "preview"
         )
-        MyItemSong(track) { }
-        MyItemSong(track) { }
+        MyItemSong(track, { }) { }
+        MyItemSong(track, { }) { }
     }
 }

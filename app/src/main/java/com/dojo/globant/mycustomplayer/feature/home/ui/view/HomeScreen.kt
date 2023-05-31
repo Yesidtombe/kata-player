@@ -43,7 +43,7 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 itemsIndexed(artistItems) { index, artist ->
-                    ItemArtist(artist, navController) {
+                    ItemArtist(artist) {
                         viewModel.getTopTracksByArtist(artist, index)
                     }
                 }
@@ -53,7 +53,10 @@ fun HomeScreen(
                verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
                 itemsIndexed(trackItems) { index, track ->
-                    MyItemSong(track) {
+                    viewModel.isFavoriteTrack(track, index)
+                    MyItemSong(track, {
+                        viewModel.goToPlaying(it.toString(), navController)
+                    }) {
                         viewModel.addFavorite(track, index)
                     }
                 }
@@ -63,7 +66,7 @@ fun HomeScreen(
 }
 
 @Composable
-fun ItemArtist(artist: Artist, navController: NavController, onClickArtist: () -> Unit) {
+fun ItemArtist(artist: Artist, onClickArtist: () -> Unit) {
     TextButton(
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(

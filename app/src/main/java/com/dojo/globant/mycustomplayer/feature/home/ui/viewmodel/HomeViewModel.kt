@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
 import com.dojo.globant.mycustomplayer.common.util.ApiResponse
+import com.dojo.globant.mycustomplayer.core.navigation.PlayerScreen
 import com.dojo.globant.mycustomplayer.feature.home.domain.models.Artist
 import com.dojo.globant.mycustomplayer.feature.home.domain.models.Track
 import com.dojo.globant.mycustomplayer.feature.home.domain.models.toDomain
@@ -29,7 +31,7 @@ class HomeViewModel @Inject constructor(
     private val _trackState = mutableStateListOf<Track>()
     val trackState = _trackState
 
-    var indexArtistSelected: Int = 0
+    private var indexArtistSelected: Int = 0
 
     init {
         viewModelScope.launch {
@@ -53,7 +55,7 @@ class HomeViewModel @Inject constructor(
             selected = false
         )
         indexArtistSelected = position
-        _artistState[position] = _artistState[position].copy(
+        _artistState[position] = artist.copy(
             selected = true
         )
         viewModelScope.launch {
@@ -75,16 +77,46 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             saveFavoriteSongUseCase.saveFavoriteSong(track)
         }
-        _trackState[position] = _trackState[position].copy(
+        _trackState[position] = track.copy(
             favorite = !track.favorite
         )
     }
 
-    fun getFavorites() {
+    fun goToPlaying(idTrack: String, navController: NavController) {
+        navController.navigate("${PlayerScreen.Player.route}/$idTrack")
+    }
+
+    /*fun getFavorites() {
         viewModelScope.launch {
-            getFavoriteSongsUseCase.getFavoritesSong().collect {
+            getFavoriteSongsUseCase.getAllFavoritesTrack().collect {
                 Log.i("Favorites", it.toString())
             }
         }
+    }*/
+
+    fun isFavoriteTrack(track: Track, position: Int) {
+        viewModelScope.launch {
+            getFavoriteSongsUseCase.getFavoriteTrack(track.id.toString()).collect {
+                Log.i("Favorite track", "${track.title} -> $it")
+                //_trackState[position] = _trackState[position].copy(
+                  //  favorite = it
+                //)
+                if (it) {
+                    _trackState[position] = track.copy(
+                        favorite = true
+                    )
+                }
+            }
+        }
     }
+/*
+    fun playTrack(preview: String) {
+        val mediaPlayer: MediaPlayer = MediaPlayer().apply {
+            setAudioStreamType(AudioManager.STREAM_MUSIC)
+            setDataSource(preview)
+            prepare() // might take long! (for buffering, etc)
+            start()
+        }
+    }*/
+
 }

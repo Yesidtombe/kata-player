@@ -38,17 +38,17 @@ fun HomeNavGraph(
         composable(route = Destinations.ProfileScreen.route) {
             Text(text = stringResource(id = R.string.profile_text_label))
         }
-        detailNavGraph(navController)
+        detailNavGraph()
     }
 }
 
-fun NavGraphBuilder.detailNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.detailNavGraph() {
     navigation(
         route = Graph.DETAILS,
         startDestination = PlayerScreen.Player.route
     ) {
-        composable(route = PlayerScreen.Player.route) {
-            PlayerScreen()
+        composable(route = "${PlayerScreen.Player.route}/{id}") {
+            PlayerScreen(idTrack = it.arguments?.getString("id").orEmpty())
         }
     }
 }

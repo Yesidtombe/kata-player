@@ -9,8 +9,8 @@ class SaveFavoriteSongUseCase @Inject constructor(
 ) {
     suspend fun saveFavoriteSong(track: Track) {
         if (track.favorite)
-            repository.deleteFavoriteSong(track.id.toString())
+            repository.deleteFavoriteTrack(track.id.toString())
         else
-            repository.saveFavoriteSong(track.id.toString())
+            repository.saveFavoriteTrack(track.id.toString())
     }
 }

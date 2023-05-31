@@ -11,8 +11,17 @@ class GetFavoriteSongsUseCase @Inject constructor(
     private val repository: HomeRepository,
     private val dispatcher: CoroutineDispatcher
 ) {
-    suspend fun getFavoritesSong(): Flow<List<String>> =
+    suspend fun getAllFavoritesTrack(): Flow<List<String>> =
         flow {
-            emit(repository.getFavoritesSong())
+            emit(repository.getAllFavoritesTrack())
+        }.flowOn(dispatcher)
+
+    suspend fun getFavoriteTrack(idTrack: String): Flow<Boolean> =
+        flow {
+            val favorite = repository.getFavoriteTrack(idTrack)
+            if (favorite.isBlank())
+                emit(false)
+            else
+                emit(true)
         }.flowOn(dispatcher)
 }
