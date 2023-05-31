@@ -1,6 +1,7 @@
 package com.dojo.globant.mycustomplayer.feature.home.domain.usecases
 
 import com.dojo.globant.mycustomplayer.feature.home.data.repositories.HomeRepository
+import com.dojo.globant.mycustomplayer.feature.home.domain.models.Track
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -11,7 +12,7 @@ class GetFavoriteSongsUseCase @Inject constructor(
     private val repository: HomeRepository,
     private val dispatcher: CoroutineDispatcher
 ) {
-    suspend fun getAllFavoritesTrack(): Flow<List<String>> =
+    suspend fun getAllFavoritesTrack(): Flow<List<Track>> =
         flow {
             emit(repository.getAllFavoritesTrack())
         }.flowOn(dispatcher)

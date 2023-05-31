@@ -11,6 +11,6 @@ class SaveFavoriteSongUseCase @Inject constructor(
         if (track.favorite)
             repository.deleteFavoriteTrack(track.id.toString())
         else
-            repository.saveFavoriteTrack(track.id.toString())
+            repository.saveFavoriteTrack(track)
     }
 }

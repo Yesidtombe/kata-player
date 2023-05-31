@@ -3,12 +3,16 @@ package com.dojo.globant.mycustomplayer.feature.home.data.repositories
 import com.dojo.globant.mycustomplayer.R
 import com.dojo.globant.mycustomplayer.common.util.ApiResponse
 import com.dojo.globant.mycustomplayer.common.util.UiText
+import com.dojo.globant.mycustomplayer.common.util.toJson
+import com.dojo.globant.mycustomplayer.common.util.toTrack
 import com.dojo.globant.mycustomplayer.core.datastore.UserManager
 import com.dojo.globant.mycustomplayer.feature.home.data.models.ArtistResponse
 import com.dojo.globant.mycustomplayer.feature.home.data.models.TrackResponse
 import com.dojo.globant.mycustomplayer.feature.home.data.network.ArtistClient
 import com.dojo.globant.mycustomplayer.feature.home.data.network.TrackClient
+import com.dojo.globant.mycustomplayer.feature.home.domain.models.Track
 import dagger.hilt.android.scopes.ViewModelScoped
+import org.json.JSONObject
 import javax.inject.Inject
 
 @ViewModelScoped
@@ -41,8 +45,8 @@ class HomeRepository @Inject constructor(
         }
     }
 
-    suspend fun saveFavoriteTrack(idTrack: String) {
-        userManager.saveFavoriteTrack(idTrack, "$idTrack track")
+    suspend fun saveFavoriteTrack(track: Track) {
+        userManager.saveFavoriteTrack(track.id.toString(), track.toJson().toString())
     }
 
     suspend fun deleteFavoriteTrack(idTrack: String) {
@@ -53,8 +57,11 @@ class HomeRepository @Inject constructor(
         return userManager.getFavoriteTrack(idTrack)
     }
 
-    suspend fun getAllFavoritesTrack() : List<String> {
-        return userManager.getAllFavoriteTracks()
+    suspend fun getAllFavoritesTrack() : List<Track> {
+        val favorites = userManager.getAllFavoriteTracks()
+        return favorites.map {
+            JSONObject(it).toTrack()
+        }
     }
 
 }
