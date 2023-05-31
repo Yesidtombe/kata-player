@@ -3,12 +3,10 @@ package com.dojo.globant.mycustomplayer.feature.home.ui.view
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +18,7 @@ import com.dojo.globant.mycustomplayer.feature.home.domain.models.Artist
 import com.dojo.globant.mycustomplayer.feature.home.ui.viewmodel.HomeViewModel
 import com.dojo.globant.mycustomplayer.ui.theme.BgMainScreen
 import com.dojo.globant.mycustomplayer.ui.theme.ShadowTitle
+import com.dojo.globant.mycustomplayer.ui.theme.TitleWhite
 
 @Composable
 fun HomeScreen(
@@ -29,9 +28,12 @@ fun HomeScreen(
 ) {
     val artistItems = viewModel.artistState
     val trackItems = viewModel.trackState
+    val artistSelected = viewModel.artistSelected
 
     Surface(
-        modifier = Modifier.fillMaxSize().padding(paddingValues),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues),
         color = BgMainScreen
     ) {
         Column(
@@ -42,13 +44,15 @@ fun HomeScreen(
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                itemsIndexed(artistItems) { index, artist ->
-                    ItemArtist(artist) {
-                        viewModel.getTopTracksByArtist(artist, index)
+                items(artistItems) {artist ->
+                    ItemArtist(artist, artistSelected) {
+                        viewModel.getTopTracksByArtist(artist)
                     }
                 }
             }
             Spacer(modifier = Modifier.height(4.dp))
+            Divider(thickness = 1.dp, color = TitleWhite)
+            Spacer(modifier = Modifier.height(8.dp))
             LazyColumn(
                verticalArrangement = Arrangement.spacedBy(6.dp)
             ) {
@@ -66,11 +70,11 @@ fun HomeScreen(
 }
 
 @Composable
-fun ItemArtist(artist: Artist, onClickArtist: () -> Unit) {
+fun ItemArtist(artist: Artist, selected: Int, onClickArtist: () -> Unit) {
     TextButton(
         shape = RoundedCornerShape(8.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = if (artist.selected) ShadowTitle else Color.Transparent
+            containerColor = if (artist.id == selected) ShadowTitle else Color.Transparent
         ),
         onClick = { onClickArtist() }
     ) {

@@ -5,5 +5,5 @@
     <string name="unexpected_error">Unexpected error</string>
     <string name="home_text_label">Home</string>
     <string name="favorite_text_label">Favorites</string>
-    <string name="profile_text_label">Profile</string>
+    <string name="settings_text_label">Settings</string>
 </resources>

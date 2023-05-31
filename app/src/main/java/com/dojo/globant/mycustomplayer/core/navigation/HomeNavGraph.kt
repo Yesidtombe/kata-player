@@ -36,7 +36,7 @@ fun HomeNavGraph(
             )
         }
         composable(route = Destinations.ProfileScreen.route) {
-            Text(text = stringResource(id = R.string.profile_text_label))
+            Text(text = stringResource(id = R.string.settings_text_label))
         }
         detailNavGraph()
     }

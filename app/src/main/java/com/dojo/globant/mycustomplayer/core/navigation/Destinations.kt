@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.dojo.globant.mycustomplayer.R
 import com.dojo.globant.mycustomplayer.common.util.UiText
@@ -24,8 +25,8 @@ sealed class Destinations(
         icon = Icons.Default.Favorite
     )
     object ProfileScreen: Destinations(
-        route = "profile",
-        title = UiText.StringResource(id = R.string.profile_text_label),
-        icon = Icons.Default.Person
+        route = "settings",
+        title = UiText.StringResource(id = R.string.settings_text_label),
+        icon = Icons.Default.Settings
     )
 }

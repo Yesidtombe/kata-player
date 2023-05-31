@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dojo.globant.mycustomplayer.core.navigation.Destinations
+import com.dojo.globant.mycustomplayer.ui.theme.Purple700
 
 @Composable
 fun BottomNavigationBar(
@@ -24,7 +25,7 @@ fun BottomNavigationBar(
     val bottomBarDestination = items.any { it.route == currentDestination?.route }
 
     if (bottomBarDestination) {
-        BottomNavigation(backgroundColor = Color.Blue) {
+        BottomNavigation(backgroundColor = Purple700) {
             items.forEach { screen ->
                 BottomNavigationItem(
                     icon = { Icon(

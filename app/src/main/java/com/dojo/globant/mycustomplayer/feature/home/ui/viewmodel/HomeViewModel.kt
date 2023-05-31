@@ -1,7 +1,9 @@
 package com.dojo.globant.mycustomplayer.feature.home.ui.viewmodel
 
-import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -31,7 +33,8 @@ class HomeViewModel @Inject constructor(
     private val _trackState = mutableStateListOf<Track>()
     val trackState = _trackState
 
-    private var indexArtistSelected: Int = 0
+    var artistSelected by mutableStateOf(0)
+        private set
 
     init {
         viewModelScope.launch {
@@ -40,7 +43,7 @@ class HomeViewModel @Inject constructor(
                     is ApiResponse.Success -> {
                         _artistState.clear()
                         _artistState.addAll(artistResponse.data?.data?.map { it.toDomain() }.orEmpty())
-                        getTopTracksByArtist(artistState.first(), 0)
+                        getTopTracksByArtist(artistState.first())
                     }
                     is ApiResponse.Error -> {
 
@@ -50,14 +53,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getTopTracksByArtist(artist: Artist, position: Int) {
-        _artistState[indexArtistSelected] = _artistState[indexArtistSelected].copy(
-            selected = false
-        )
-        indexArtistSelected = position
-        _artistState[position] = artist.copy(
-            selected = true
-        )
+    fun getTopTracksByArtist(artist: Artist) {
+        artistSelected = artist.id
         viewModelScope.launch {
             getTopTracksByArtistUseCase.getTopTracks(artist.id).collect { trackResponse ->
                 when (trackResponse) {
@@ -97,10 +94,6 @@ class HomeViewModel @Inject constructor(
     fun isFavoriteTrack(track: Track, position: Int) {
         viewModelScope.launch {
             getFavoriteSongsUseCase.getFavoriteTrack(track.id.toString()).collect {
-                Log.i("Favorite track", "${track.title} -> $it")
-                //_trackState[position] = _trackState[position].copy(
-                  //  favorite = it
-                //)
                 if (it) {
                     _trackState[position] = track.copy(
                         favorite = true
