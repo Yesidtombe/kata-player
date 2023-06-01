@@ -83,14 +83,6 @@ class HomeViewModel @Inject constructor(
         navController.navigate("${PlayerScreen.Player.route}/$idTrack")
     }
 
-    /*fun getFavorites() {
-        viewModelScope.launch {
-            getFavoriteSongsUseCase.getAllFavoritesTrack().collect {
-                Log.i("Favorites", it.toString())
-            }
-        }
-    }*/
-
     fun isFavoriteTrack(track: Track, position: Int) {
         viewModelScope.launch {
             getFavoriteSongsUseCase.getFavoriteTrack(track.id.toString()).collect {
@@ -102,14 +94,5 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-/*
-    fun playTrack(preview: String) {
-        val mediaPlayer: MediaPlayer = MediaPlayer().apply {
-            setAudioStreamType(AudioManager.STREAM_MUSIC)
-            setDataSource(preview)
-            prepare() // might take long! (for buffering, etc)
-            start()
-        }
-    }*/
 
 }

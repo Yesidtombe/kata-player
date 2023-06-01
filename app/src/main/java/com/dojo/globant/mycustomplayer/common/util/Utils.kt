@@ -26,3 +26,9 @@ fun JSONObject.toTrack() : Track {
         favorite = true
     )
 }
+
+fun Float.toMinSecTime() : Pair<Int, Int> {
+    val min = (this / 60000F).toInt()
+    val sec = (this.mod(60000F)/1000).toInt()
+    return Pair(min, sec)
+}
