@@ -32,6 +32,7 @@ fun HomeNavGraph(
         }
         composable(route = Destinations.FavoritesScreen.route) {
             FavoriteScreen(
+                navController = navController,
                 paddingValues = paddingValues
             )
         }

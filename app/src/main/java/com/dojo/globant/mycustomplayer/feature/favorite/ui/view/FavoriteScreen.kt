@@ -12,16 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.dojo.globant.mycustomplayer.common.composables.MyFavoriteSong
 import com.dojo.globant.mycustomplayer.feature.favorite.ui.viewmodel.FavoriteViewModel
-import com.dojo.globant.mycustomplayer.feature.home.domain.models.Album
-import com.dojo.globant.mycustomplayer.feature.home.domain.models.Artist
-import com.dojo.globant.mycustomplayer.feature.home.domain.models.Track
 import com.dojo.globant.mycustomplayer.ui.theme.BgMainScreen
 
 @Composable
 fun FavoriteScreen(
     viewModel: FavoriteViewModel = hiltViewModel(),
+    navController: NavController,
     paddingValues: PaddingValues
 ) {
     val favorites = viewModel.trackState
@@ -38,8 +37,10 @@ fun FavoriteScreen(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(favorites) {
-                MyFavoriteSong(it)
+            items(favorites) { favorite ->
+                MyFavoriteSong(favorite) {
+                    viewModel.goToPlaying(it.toString(), navController)
+                }
             }
         }
     }

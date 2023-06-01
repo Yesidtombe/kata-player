@@ -1,5 +1,7 @@
 package com.dojo.globant.mycustomplayer.feature.home.ui.viewmodel
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -7,6 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.dojo.globant.mycustomplayer.R
 import com.dojo.globant.mycustomplayer.common.util.ApiResponse
 import com.dojo.globant.mycustomplayer.core.navigation.PlayerScreen
 import com.dojo.globant.mycustomplayer.feature.home.domain.models.Artist
@@ -70,10 +73,22 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun addFavorite(track: Track, position: Int) {
+    fun addFavorite(context: Context, track: Track, position: Int) {
         viewModelScope.launch {
             saveFavoriteSongUseCase.saveFavoriteSong(track)
         }
+        if (track.favorite)
+            Toast.makeText(
+                context,
+                context.getString(R.string.message_clicked_icon_favorite, "Removed"),
+                Toast.LENGTH_SHORT
+            ).show()
+        else
+            Toast.makeText(
+                context,
+                context.getString(R.string.message_clicked_icon_favorite, "Added"),
+                Toast.LENGTH_SHORT
+            ).show()
         _trackState[position] = track.copy(
             favorite = !track.favorite
         )

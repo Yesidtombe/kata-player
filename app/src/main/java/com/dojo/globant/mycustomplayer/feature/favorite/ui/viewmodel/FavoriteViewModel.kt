@@ -3,6 +3,8 @@ package com.dojo.globant.mycustomplayer.feature.favorite.ui.viewmodel
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.dojo.globant.mycustomplayer.core.navigation.PlayerScreen
 import com.dojo.globant.mycustomplayer.feature.home.domain.models.Track
 import com.dojo.globant.mycustomplayer.feature.home.domain.usecases.GetFavoriteSongsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +26,10 @@ class FavoriteViewModel @Inject constructor(
                 _trackState.addAll(it)
             }
         }
+    }
+
+    fun goToPlaying(idTrack: String, navController: NavController) {
+        navController.navigate("${PlayerScreen.Player.route}/$idTrack")
     }
 
 }

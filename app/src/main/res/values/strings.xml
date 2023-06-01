@@ -6,4 +6,5 @@
     <string name="home_text_label">Home</string>
     <string name="favorite_text_label">Favorites</string>
     <string name="settings_text_label">Settings</string>
+    <string name="message_clicked_icon_favorite">%1$s to Favorites</string>
 </resources>

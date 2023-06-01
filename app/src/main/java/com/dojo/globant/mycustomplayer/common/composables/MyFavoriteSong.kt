@@ -1,5 +1,6 @@
 package com.dojo.globant.mycustomplayer.common.composables
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -26,9 +27,12 @@ import com.dojo.globant.mycustomplayer.ui.theme.ArtistGray
 import com.dojo.globant.mycustomplayer.ui.theme.MyPlayerTypography
 
 @Composable
-fun MyFavoriteSong(track: Track) {
+fun MyFavoriteSong(
+    track: Track,
+    onClickFavorite: (Long) -> Unit
+) {
     Card(
-        modifier = Modifier.width(200.dp),
+        modifier = Modifier.width(200.dp).clickable { onClickFavorite(track.id) },
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Column {
@@ -82,5 +86,5 @@ fun MyPreviewFavorite() {
         ),
         preview = "preview"
     )
-    MyFavoriteSong(track)
+    MyFavoriteSong(track) { }
 }

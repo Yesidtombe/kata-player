@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -29,6 +30,7 @@ fun HomeScreen(
     val artistItems = viewModel.artistState
     val trackItems = viewModel.trackState
     val artistSelected = viewModel.artistSelected
+    val context = LocalContext.current
 
     Surface(
         modifier = Modifier
@@ -61,7 +63,7 @@ fun HomeScreen(
                     MyItemSong(track, {
                         viewModel.goToPlaying(it.toString(), navController)
                     }) {
-                        viewModel.addFavorite(track, index)
+                        viewModel.addFavorite(context, track, index)
                     }
                 }
             }
